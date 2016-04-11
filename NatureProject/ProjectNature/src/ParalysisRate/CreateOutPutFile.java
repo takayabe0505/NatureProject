@@ -72,16 +72,28 @@ public class CreateOutPutFile {
 		}
 		for(int i=0; i<=95; i++){
 			String time = String.valueOf(i);
-			String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
-			bw.write("2,"+time+","+avg_activeness);
-			bw.newLine();
+			if(OD_data.containsKey(time)){
+				String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
+				bw.write("2,"+time+","+avg_activeness);
+				bw.newLine();
+			}
+			else{
+				bw.write("2,"+time+",0");
+				bw.newLine();
+			}
 		}
 		for(int i=96; i<=191; i++){
 			String time = String.valueOf(i);
 			String time_minus = String.valueOf(i-96);
-			String avg_activeness = String.valueOf(get_avg(OD_data.get(time_minus)));
-			bw.write("2,"+time+","+avg_activeness);
-			bw.newLine();
+			if(OD_data.containsKey(time_minus)){
+				String avg_activeness = String.valueOf(get_avg(OD_data.get(time_minus)));
+				bw.write("2,"+time+","+avg_activeness);
+				bw.newLine();
+			}
+			else{
+				bw.write("2,"+time+",0");
+				bw.newLine();
+			}
 		}
 		br2.close();
 		bw.close();
@@ -132,9 +144,15 @@ public class CreateOutPutFile {
 		}
 		for(int i=0; i<=191;i++){
 			String time = String.valueOf(i);
-			String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
-			bw.write("2,"+time+","+avg_activeness);
-			bw.newLine();
+			if(OD_data.containsKey(time)){
+				String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
+				bw.write("2,"+time+","+avg_activeness);
+				bw.newLine();
+			}
+			else{
+				bw.write("2,"+time+",0");
+				bw.newLine();
+			}
 		}
 		br2.close();
 		bw.close();

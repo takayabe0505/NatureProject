@@ -51,7 +51,8 @@ public class MainFlow {
 		HashSet<String> exp_dates = DateGetter.getTargetDates(disaster_date, dislog, holidays);
 		exp_dates.add(disaster_date);
 		exp_dates.add(DateGetter.nextday(disaster_date));
-
+		System.out.println("days for exp are; "+exp_dates);
+		
 		runforday(out,result,disaster_date,exp_dates);
 		System.out.println("done "+disaster_date);
 

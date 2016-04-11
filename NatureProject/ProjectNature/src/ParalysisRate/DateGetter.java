@@ -25,10 +25,11 @@ public class DateGetter {
 			holi_set.add(yyyymmdd);
 		}
 		br_h.close();
+		System.out.println(holi_set); //TODO erase
 
 		File dislogs = new File(dislog);
 		HashSet<String> res = new HashSet<String>();
-		HashSet<Date> DisDays = getDisDays(dislogs);
+		HashSet<String> DisDays = getDisDays(dislogs);
 
 		String year  = disDate.substring(0,4);
 		String month = disDate.substring(4,6);
@@ -42,9 +43,9 @@ public class DateGetter {
 				Date d = SDF_TS.parse(year+"-"+month+"-"+day_candidate);
 				String youbi = (new SimpleDateFormat("u")).format(d);
 				if((youbi.equals("6"))||(youbi.equals("7"))){
-					if(!(DisDays.contains(d))){
-						String day_2dig   = String.format("%02d", i);
-						String date = year+month+day_2dig;
+					String day_2dig   = String.format("%02d", i);
+					String date = year+month+day_2dig;
+					if(!(DisDays.contains(date))){
 						res.add(date);
 						if(res.size()==5){
 							break;
@@ -59,10 +60,10 @@ public class DateGetter {
 				Date d = SDF_TS.parse(year+"-"+month+"-"+day_candidate);
 				String youbi = (new SimpleDateFormat("u")).format(d);
 				if(!((youbi.equals("6"))||(youbi.equals("7")))){
+					String day_2dig   = String.format("%02d", i);
+					String date = year+month+day_2dig;
 					if(!(DisDays.contains(d))){
-						String day_2dig   = String.format("%02d", i);
-						String date = year+month+day_2dig;
-						if(!holi_set.contains(disaster_youbi)){
+						if(!holi_set.contains(date)){
 							res.add(date);
 							if(res.size()==5){
 								break;
@@ -77,8 +78,8 @@ public class DateGetter {
 
 	protected static final SimpleDateFormat SDF_TS = new SimpleDateFormat("yyyy-MM-dd");//change time format
 
-	public static HashSet<Date> getDisDays(File dislogs) throws IOException, ParseException{
-		HashSet<Date> res = new HashSet<Date>();
+	public static HashSet<String> getDisDays(File dislogs) throws IOException, ParseException{
+		HashSet<String> res = new HashSet<String>();
 		BufferedReader br = new BufferedReader(new FileReader(dislogs));
 		String line = null;
 		while((line = br.readLine())!= null){
@@ -94,7 +95,7 @@ public class DateGetter {
 			Date d2 = SDF_TS.parse("2015-11-07");
 			Date date = SDF_TS.parse(year+"-"+month+"-"+day);
 			if((date.after(d))&&(date.before(d2))){
-				res.add(date);
+				res.add(year+month+day);
 			}
 		}
 		br.close();

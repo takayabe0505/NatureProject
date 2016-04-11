@@ -16,7 +16,7 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 
 public class MainFlow {
 
-	public static Integer max_id_count = 1;
+	public static Integer max_id_count = 10000;
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";

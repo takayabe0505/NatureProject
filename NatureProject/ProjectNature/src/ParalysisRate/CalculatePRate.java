@@ -32,15 +32,17 @@ public class CalculatePRate {
 		for(Entry<Integer, LonLat> e : entries){
 			Integer t = e.getKey();
 			Integer timelength = t - starttime;
-			if((timelength!=0)||(starttime>0)){
-				Double distance = e.getValue().distance(firstpoint);
-				Double velocity = distance/(double)timelength;
-				Double velocity_km = velocity/1000d;
-				BigDecimal bi = new BigDecimal(String.valueOf(velocity_km));
-				Double vel_digit = bi.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
-				System.out.println(e.getKey()+" "+e.getValue()+", "+starttime+" "+firstpoint+", "+velocity);
-				for(int i = starttime; i<t; i++){
-					res.put(i, vel_digit);
+			if(!(firstpoint.getLon()==0)){
+				if((timelength!=0)||(starttime>0)){
+					Double distance = e.getValue().distance(firstpoint);
+					Double velocity = distance/(double)timelength;
+					Double velocity_km = velocity/1000d;
+					BigDecimal bi = new BigDecimal(String.valueOf(velocity_km));
+					Double vel_digit = bi.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
+					System.out.println(e.getKey()+" "+e.getValue()+", "+starttime+" "+firstpoint+", "+velocity);
+					for(int i = starttime; i<t; i++){
+						res.put(i, vel_digit);
+					}
 				}
 			}
 			starttime = t;

@@ -20,7 +20,7 @@ public class MainFlow {
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  dislog = "/home/t-tyabe/Data/DisasterLogs/DisasterAlertData_shutoken.csv";
+	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 
 	public static void main(String args[]) throws IOException, ParseException{
 		File homepath_root = new File(homepath); homepath_root.mkdir();

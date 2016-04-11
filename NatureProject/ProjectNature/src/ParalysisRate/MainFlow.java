@@ -16,10 +16,11 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 
 public class MainFlow {
 
-	public static Integer max_id_count = 10000;
+	public static Integer max_id_count = 1;
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
+	public static String  respath  = "/home/t-tyabe/NatureExp/results/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 
 	public static void main(String args[]) throws IOException, ParseException{
@@ -29,19 +30,17 @@ public class MainFlow {
 		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
 		String line = null;
 
-		HashSet<String> calculated_days = new HashSet<String>();
-
 		while((line=br.readLine())!=null){
-			entireflow(line, calculated_days); // line = disaster_date = YYYYMMDD
+			entireflow(line); // line = disaster_date = YYYYMMDD
 		}
 		br.close();
 
 	}
 
-	public static void entireflow(String disaster_date, HashSet<String> calculated_days) throws IOException, ParseException{ // <-- for each disaster day
+	public static void entireflow(String disaster_date) throws IOException, ParseException{ // <-- for each disaster day
 
 		//		File out = new File("c:/users/yabetaka/desktop/testresults_10mins_typhoon_km.csv"); //day, time, flowamount
-		File out = new File(homepath+disaster_date+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
+		File out = new File(respath+disaster_date+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
 
 		HashMap<String, HashMap<Integer, Double>> result = new HashMap<String, HashMap<Integer, Double>>();
 
@@ -49,27 +48,26 @@ public class MainFlow {
 		exp_dates.add(disaster_date);
 		exp_dates.add(DateGetter.nextday(disaster_date));
 
-		runforday(out,result,disaster_date,exp_dates,calculated_days);
+		runforday(out,result,disaster_date,exp_dates);
 		System.out.println("done "+disaster_date);
 
-		File out1 = new File(homepath+disaster_date+"_forplot1day.csv");
+		File out1 = new File(respath+disaster_date+"_forplot1day.csv");
 		CreateOutPutFile.modify_1day(out, out1);
 
-		File out2 = new File(homepath+disaster_date+"_forplot2days.csv");
+		File out2 = new File(respath+disaster_date+"_forplot2days.csv");
 		CreateOutPutFile.modify_2days(out, out2);
 
 	}
 
-	public static void runforday(File out, HashMap<String, HashMap<Integer, Double>> result, String day, HashSet<String> datesforexp,
-			HashSet<String> calculated_days) throws IOException, ParseException{	
+	public static void runforday(File out, HashMap<String, HashMap<Integer, Double>> result, String day, HashSet<String> datesforexp) throws IOException, ParseException{	
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
 
 		for(String d : datesforexp){
 
-			if(!calculated_days.contains(d)){
+			if(!(new File(respath+d+".csv").exists())){
 
-				File out_eachday = new File(homepath+d+".csv");
+				File out_eachday = new File(respath+d+".csv");
 				BufferedWriter bw_each = new BufferedWriter(new FileWriter(out_eachday));
 
 				//disaster_date = YYYYMMDD
@@ -110,12 +108,12 @@ public class MainFlow {
 					bw.newLine();				
 					bw_each.newLine();
 				}
-				calculated_days.add(d);
 				bw_each.close();
 				System.out.println("#calculated and written out "+d+" for first time.");
+				in.delete();
 			}
 			else{
-				BufferedReader br_already = new BufferedReader(new FileReader(new File(homepath+d+".csv")));
+				BufferedReader br_already = new BufferedReader(new FileReader(new File(respath+d+".csv")));
 				String line_already = null;
 				while((line_already=br_already.readLine())!=null){
 					String[] tokens = line_already.split(",");
@@ -190,9 +188,9 @@ public class MainFlow {
 					}
 				}
 			}
-			else{
-				System.out.println(line);
-			}
+//			else{
+//				System.out.println(line);
+//			}
 		}
 		br.close();
 		return map;

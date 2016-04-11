@@ -47,7 +47,7 @@ public class DateGetter {
 					String date = year+month+day_2dig;
 					if(!(DisDays.contains(date))){
 						res.add(date);
-						if(res.size()==5){
+						if(res.size()==10){
 							break;
 						}
 					}
@@ -65,7 +65,7 @@ public class DateGetter {
 					if(!(DisDays.contains(d))){
 						if(!holi_set.contains(date)){
 							res.add(date);
-							if(res.size()==5){
+							if(res.size()==10){
 								break;
 							}
 						}

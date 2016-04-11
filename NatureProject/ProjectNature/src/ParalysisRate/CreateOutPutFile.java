@@ -70,12 +70,17 @@ public class CreateOutPutFile {
 				bw.newLine();
 			}
 		}
-		for(String time : OD_data.keySet()){
+		for(int i=0; i<=95; i++){
+			String time = String.valueOf(i);
 			String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
 			bw.write("2,"+time+","+avg_activeness);
 			bw.newLine();
-			String next_time2 = String.valueOf(Integer.valueOf(time)+96);
-			bw.write("2,"+next_time2+","+avg_activeness);
+		}
+		for(int i=96; i<=191; i++){
+			String time = String.valueOf(i);
+			String time_minus = String.valueOf(i-96);
+			String avg_activeness = String.valueOf(get_avg(OD_data.get(time_minus)));
+			bw.write("2,"+time+","+avg_activeness);
 			bw.newLine();
 		}
 		br2.close();
@@ -125,7 +130,8 @@ public class CreateOutPutFile {
 				bw.newLine();
 			}
 		}
-		for(String time : OD_data.keySet()){
+		for(int i=0; i<=191;i++){
+			String time = String.valueOf(i);
 			String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
 			bw.write("2,"+time+","+avg_activeness);
 			bw.newLine();

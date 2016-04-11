@@ -42,7 +42,7 @@ public class GetDisasterDates {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		String line = br.readLine();
 		while((line = br.readLine())!= null){
-			String[] tokens = line.split(",");
+			String[] tokens = line.split("\t");
 
 			String[] ymd = tokens[0].split("/");
 			String daytime = ymd[2];

@@ -25,7 +25,7 @@ public class MainFlow {
 	public static void main(String args[]) throws IOException, ParseException{
 		File homepath_root = new File(homepath); homepath_root.mkdir();
 
-		File dates_of_disaster = new File("");
+		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
 		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
 		String line = null;
 

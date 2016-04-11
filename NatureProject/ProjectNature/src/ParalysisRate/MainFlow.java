@@ -52,7 +52,7 @@ public class MainFlow {
 		exp_dates.add(disaster_date);
 		exp_dates.add(DateGetter.nextday(disaster_date));
 		System.out.println("days for exp are; "+exp_dates);
-		
+
 		runforday(out,result,disaster_date,exp_dates);
 		System.out.println("done "+disaster_date);
 
@@ -69,8 +69,15 @@ public class MainFlow {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
 
 		int count_normaldays = 1;
-		
+
 		for(String d : datesforexp){
+
+			String code = SmallMethods.code_of_day(d, day);
+			String code_2 = code;
+			if(code.equals("OD")){
+				code_2="OD"+String.valueOf(count_normaldays);
+				count_normaldays++;
+			}
 
 			if(!(new File(respath+d+".csv").exists())){
 
@@ -102,21 +109,14 @@ public class MainFlow {
 				}
 				result.put(d, resforday);
 				System.out.println("done "+d);
-				
-				String code = SmallMethods.code_of_day(d, day);
-				String code_2 = code;
-				if(code.equals("OD")){
-					code_2="OD"+String.valueOf(count_normaldays);
-					count_normaldays++;
-				}
-				
+
 				for(int time = 0; time<1440/bin; time++){
 					if(result.get(d).containsKey(time)){
-						bw.write(d+","+code+","+code_2+","+String.valueOf(time)+","+String.valueOf(result.get(d).get(time)));
+						bw.write(d+","+code+","+String.valueOf(time)+","+String.valueOf(result.get(d).get(time))+","+code_2);
 						bw_each.write(d+","+String.valueOf(time)+","+String.valueOf(result.get(d).get(time)));
 					}
 					else{
-						bw.write(d+","+code+","+code_2+","+String.valueOf(time)+",");
+						bw.write(d+","+code+","+String.valueOf(time)+","+","+code_2);
 						bw_each.write(d+","+String.valueOf(time)+",");
 					}
 					bw.newLine();				
@@ -134,7 +134,7 @@ public class MainFlow {
 					String day_already = tokens[0];
 					String t_already = tokens[1];
 					String res_already = tokens[2];
-					bw.write(day_already+",OD,"+t_already+","+res_already);
+					bw.write(day_already+",OD,"+t_already+","+res_already+","+code_2);
 					bw.newLine();
 				}
 				br_already.close();
@@ -202,9 +202,9 @@ public class MainFlow {
 					}
 				}
 			}
-//			else{
-//				System.out.println(line);
-//			}
+			//			else{
+			//				System.out.println(line);
+			//			}
 		}
 		br.close();
 		return map;

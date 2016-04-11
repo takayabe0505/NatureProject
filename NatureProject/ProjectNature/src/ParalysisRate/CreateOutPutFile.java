@@ -15,7 +15,7 @@ public class CreateOutPutFile {
 
 		String disaster_date = "20150512";
 		String level = "4";
-		String  respath  = "/home/t-tyabe/NatureExp/results/";
+		String respath  = "/home/t-tyabe/NatureExp/results/";
 		
 		File out = new File(respath+disaster_date+"_"+level+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
 		
@@ -52,7 +52,7 @@ public class CreateOutPutFile {
 		br.close();
 		
 		BufferedReader br2 = new BufferedReader(new FileReader(in));
-		BufferedWriter bw  = new BufferedWriter(new FileWriter(out));
+		BufferedWriter bw  = new BufferedWriter(new FileWriter(out,true));
 		String line2 = null;
 		while((line2=br2.readLine())!=null){
 			String[] tokens = line2.split(",");
@@ -62,18 +62,19 @@ public class CreateOutPutFile {
 			String activeness_val = tokens[3];
 			if(day_code.equals("DD")){
 				bw.write("1,"+time+","+activeness_val);
+				bw.newLine();
 			}
 			else if(day_code.equals("ND")){
-				String next_time = String.valueOf(Integer.valueOf(time)+143);
+				String next_time = String.valueOf(Integer.valueOf(time)+96);
 				bw.write("1,"+next_time+","+activeness_val);
+				bw.newLine();
 			}
-			bw.newLine();
 		}
 		for(String time : OD_data.keySet()){
 			String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));
 			bw.write("2,"+time+","+avg_activeness);
 			bw.newLine();
-			String next_time2 = String.valueOf(Integer.valueOf(time)+143);
+			String next_time2 = String.valueOf(Integer.valueOf(time)+96);
 			bw.write("2,"+next_time2+","+avg_activeness);
 			bw.newLine();
 		}
@@ -107,7 +108,7 @@ public class CreateOutPutFile {
 		br.close();
 		
 		BufferedReader br2 = new BufferedReader(new FileReader(in));
-		BufferedWriter bw  = new BufferedWriter(new FileWriter(out));
+		BufferedWriter bw  = new BufferedWriter(new FileWriter(out,true));
 		String line2 = null;
 		while((line2=br2.readLine())!=null){
 			String[] tokens = line2.split(",");
@@ -117,11 +118,12 @@ public class CreateOutPutFile {
 			String activeness_val = tokens[3];
 			if(day_code.equals("DD")){
 				bw.write("1,"+time+","+activeness_val);
+				bw.newLine();
 			}
 			else if(day_code.equals("ND")){
 				bw.write("3,"+time+","+activeness_val);
+				bw.newLine();
 			}
-			bw.newLine();
 		}
 		for(String time : OD_data.keySet()){
 			String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));

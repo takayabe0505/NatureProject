@@ -68,10 +68,10 @@ public class MainFlow {
 		for(String d : datesforexp){
 
 			if(!calculated_days.contains(d)){
-				
+
 				File out_eachday = new File(homepath+d+".csv");
 				BufferedWriter bw_each = new BufferedWriter(new FileWriter(out_eachday));
-				
+
 				//disaster_date = YYYYMMDD
 				SmallMethods.extractfromcommand(d); System.out.println("#done uncompressing ");
 
@@ -141,16 +141,23 @@ public class MainFlow {
 		BufferedReader br1 = new BufferedReader(new FileReader(in));
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
-			String id_br1 = line1.split("\t")[0];
-			Double lon = Double.parseDouble(line1.split("\t")[3]);
-			Double lat = Double.parseDouble(line1.split("\t")[2]);
-			if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
-				IDs_insidearea.add(id_br1);
-				//System.out.println("number of ids: "+IDs_insidearea.size());
-			}
-			if(IDs_insidearea.size()==max_id_count){
-				System.out.println("successfully got "+max_id_count+" ids.");
-				break;
+			String[] tokens = line1.split("\t"); 
+			if(tokens.length==7){
+				String id_br1 = tokens[0];
+				if(!id_br1.equals("null")){
+					if(tokens[4].length()>=18){
+						Double lon = Double.parseDouble(tokens[3]);
+						Double lat = Double.parseDouble(tokens[2]);
+						if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
+							IDs_insidearea.add(id_br1);
+							//System.out.println("number of ids: "+IDs_insidearea.size());
+						}
+						if(IDs_insidearea.size()==max_id_count){
+							System.out.println("successfully got "+max_id_count+" ids.");
+							break;
+						}
+					}
+				}
 			}
 		}
 		br1.close();
@@ -160,21 +167,27 @@ public class MainFlow {
 		String line = null;
 		while((line=br.readLine()) != null){
 			String[] tokens = line.split("\t");
-			String id = tokens[0];
-			//			String date = tokens[1].split(" ")[0];
-			String Y_time = SmallMethods.convertYtime(tokens[4]); //yyyymmdd hh:mm:ss
-			Integer time = SmallMethods.convertintomins(Y_time.split(" ")[1], bin);
-			Double lon = Double.parseDouble(tokens[3]);
-			Double lat = Double.parseDouble(tokens[2]);
-			LonLat p = new LonLat(lon,lat);
-			if(IDs_insidearea.contains(id)){
-				if(map.keySet().contains(id)){
-					map.get(id).put(time, p);
-				}
-				else{
-					TreeMap<Integer,LonLat> temp = new TreeMap<Integer,LonLat>();
-					temp.put(time, p);
-					map.put(id, temp);
+			if(tokens.length==7){
+				String id = tokens[0];
+				//			String date = tokens[1].split(" ")[0];
+				if(!id.equals("null")){
+					if(tokens[4].length()>=18){
+						String Y_time = SmallMethods.convertYtime(tokens[4]); //yyyymmdd hh:mm:ss
+						Integer time = SmallMethods.convertintomins(Y_time.split(" ")[1], bin);
+						Double lon = Double.parseDouble(tokens[3]);
+						Double lat = Double.parseDouble(tokens[2]);
+						LonLat p = new LonLat(lon,lat);
+						if(IDs_insidearea.contains(id)){
+							if(map.keySet().contains(id)){
+								map.get(id).put(time, p);
+							}
+							else{
+								TreeMap<Integer,LonLat> temp = new TreeMap<Integer,LonLat>();
+								temp.put(time, p);
+								map.put(id, temp);
+							}
+						}
+					}
 				}
 			}
 		}

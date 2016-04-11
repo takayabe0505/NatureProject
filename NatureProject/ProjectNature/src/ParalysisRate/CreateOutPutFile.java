@@ -142,7 +142,7 @@ public class CreateOutPutFile {
 				bw.newLine();
 			}
 		}
-		for(int i=0; i<=191;i++){
+		for(int i=0; i<=95;i++){
 			String time = String.valueOf(i);
 			if(OD_data.containsKey(time)){
 				String avg_activeness = String.valueOf(get_avg(OD_data.get(time)));

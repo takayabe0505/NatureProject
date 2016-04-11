@@ -22,6 +22,7 @@ public class MainFlow {
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
 	public static String  respath  = "/home/t-tyabe/NatureExp/results/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
+	public static File    holidays = new File(homepath+"holidays.csv");
 
 	public static void main(String args[]) throws IOException, ParseException{
 		File homepath_root = new File(homepath); homepath_root.mkdir();
@@ -47,7 +48,7 @@ public class MainFlow {
 
 		HashMap<String, HashMap<Integer, Double>> result = new HashMap<String, HashMap<Integer, Double>>();
 
-		HashSet<String> exp_dates = DateGetter.getTargetDates(disaster_date, dislog);
+		HashSet<String> exp_dates = DateGetter.getTargetDates(disaster_date, dislog, holidays);
 		exp_dates.add(disaster_date);
 		exp_dates.add(DateGetter.nextday(disaster_date));
 

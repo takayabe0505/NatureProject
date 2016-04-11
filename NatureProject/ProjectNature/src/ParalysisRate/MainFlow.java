@@ -142,8 +142,8 @@ public class MainFlow {
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
 			String id_br1 = line1.split("\t")[0];
-			Double lon = Double.parseDouble(line1.split(",")[3]);
-			Double lat = Double.parseDouble(line1.split(",")[2]);
+			Double lon = Double.parseDouble(line1.split("\t")[3]);
+			Double lat = Double.parseDouble(line1.split("\t")[2]);
 			if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
 				IDs_insidearea.add(id_br1);
 				//System.out.println("number of ids: "+IDs_insidearea.size());

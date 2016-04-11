@@ -68,6 +68,8 @@ public class MainFlow {
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
 
+		int count_normaldays = 1;
+		
 		for(String d : datesforexp){
 
 			if(!(new File(respath+d+".csv").exists())){
@@ -100,14 +102,21 @@ public class MainFlow {
 				}
 				result.put(d, resforday);
 				System.out.println("done "+d);
-
+				
+				String code = SmallMethods.code_of_day(d, day);
+				String code_2 = code;
+				if(code.equals("OD")){
+					code_2="OD"+String.valueOf(count_normaldays);
+					count_normaldays++;
+				}
+				
 				for(int time = 0; time<1440/bin; time++){
 					if(result.get(d).containsKey(time)){
-						bw.write(d+","+SmallMethods.code_of_day(d, day)+","+String.valueOf(time)+","+String.valueOf(result.get(d).get(time)));
+						bw.write(d+","+code+","+code_2+","+String.valueOf(time)+","+String.valueOf(result.get(d).get(time)));
 						bw_each.write(d+","+String.valueOf(time)+","+String.valueOf(result.get(d).get(time)));
 					}
 					else{
-						bw.write(d+","+SmallMethods.code_of_day(d, day)+","+String.valueOf(time)+",");
+						bw.write(d+","+code+","+code_2+","+String.valueOf(time)+",");
 						bw_each.write(d+","+String.valueOf(time)+",");
 					}
 					bw.newLine();				

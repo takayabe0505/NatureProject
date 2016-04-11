@@ -39,7 +39,7 @@ public class CalculatePRate {
 					Double velocity_km = velocity/1000d;
 					BigDecimal bi = new BigDecimal(String.valueOf(velocity_km));
 					Double vel_digit = bi.setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
-					System.out.println(e.getKey()+" "+e.getValue()+", "+starttime+" "+firstpoint+", "+velocity);
+//					System.out.println(e.getKey()+" "+e.getValue()+", "+starttime+" "+firstpoint+", "+velocity);
 					for(int i = starttime; i<t; i++){
 						res.put(i, vel_digit);
 					}

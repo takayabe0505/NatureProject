@@ -31,16 +31,19 @@ public class MainFlow {
 		String line = null;
 
 		while((line=br.readLine())!=null){
-			entireflow(line); // line = disaster_date = YYYYMMDD
+			String[] tokens = line.split(",");
+			String disaster_date = tokens[0];
+			String level = tokens[1];
+			entireflow(disaster_date,level); // line = disaster_date = YYYYMMDD
 		}
 		br.close();
 
 	}
 
-	public static void entireflow(String disaster_date) throws IOException, ParseException{ // <-- for each disaster day
+	public static void entireflow(String disaster_date,String level) throws IOException, ParseException{ // <-- for each disaster day
 
 		//		File out = new File("c:/users/yabetaka/desktop/testresults_10mins_typhoon_km.csv"); //day, time, flowamount
-		File out = new File(respath+disaster_date+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
+		File out = new File(respath+disaster_date+"_"+level+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
 
 		HashMap<String, HashMap<Integer, Double>> result = new HashMap<String, HashMap<Integer, Double>>();
 
@@ -120,7 +123,7 @@ public class MainFlow {
 					String day_already = tokens[0];
 					String t_already = tokens[1];
 					String res_already = tokens[2];
-					bw.write(day_already+","+SmallMethods.code_of_day(d,day)+","+t_already+","+res_already);
+					bw.write(day_already+",OD,"+t_already+","+res_already);
 					bw.newLine();
 				}
 				br_already.close();

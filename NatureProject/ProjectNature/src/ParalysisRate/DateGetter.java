@@ -31,7 +31,8 @@ public class DateGetter {
 				String youbi = (new SimpleDateFormat("u")).format(d);
 				if((youbi.equals("6"))||(youbi.equals("7"))){
 					if(!(DisDays.contains(d))){
-						String date = SDF_TS.format(d);
+						String day_2dig   = String.format("%02d", i);
+						String date = year+month+day_2dig;
 						res.add(date);
 						if(res.size()==5){
 							break;
@@ -47,7 +48,8 @@ public class DateGetter {
 				String youbi = (new SimpleDateFormat("u")).format(d);
 				if(!((youbi.equals("6"))||(youbi.equals("7")))){
 					if(!(DisDays.contains(d))){
-						String date = SDF_TS.format(d);
+						String day_2dig   = String.format("%02d", i);
+						String date = year+month+day_2dig;
 						res.add(date);
 						if(res.size()==5){
 							break;

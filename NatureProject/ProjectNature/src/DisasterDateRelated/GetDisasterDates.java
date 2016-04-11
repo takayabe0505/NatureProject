@@ -16,9 +16,9 @@ public class GetDisasterDates {
 	protected static final SimpleDateFormat YMD = new SimpleDateFormat("yyyy-MM-dd");//change time format
 	
 	public static void main(String[] args) throws IOException, ParseException{
-		File in = new File("c:/users/t-tyabe/DisasterAlertData_20160224.csv");
-		File out = new File("c:/users/t-tyabe/DisasterAlertData_shutoken.csv");
-		File jiscodes = new File("c:/users/t-tyabe/desktop/ShutokenSHP/JIScodes.csv");
+		File in = new File("c:/users/t-tyabe/Desktop/DisasterAlertData_20160224.csv");
+		File out = new File("c:/users/t-tyabe/Desktop/DisasterAlertData_shutoken.csv");
+		File jiscodes = new File("c:/users/t-tyabe/d esktop/ShutokenSHP/JIScodes.csv");
 		
 		choosebyAreaDateType(in,out,jiscodes,"2014-10-21","2016-01-06");
 	}

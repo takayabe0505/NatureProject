@@ -19,7 +19,9 @@ public class DateGetter {
 		String line_h = null;
 		while((line_h=br_h.readLine())!=null){
 			String[] hs = line_h.split("/");
-			String yyyymmdd = hs[0]+String.format("%02d", hs[1])+String.format("%02d", hs[1]);
+			Integer mon = Integer.valueOf(hs[1]);
+			Integer day = Integer.valueOf(hs[2]);
+			String yyyymmdd = hs[0]+String.format("%02d", mon)+String.format("%02d", day);
 			holi_set.add(yyyymmdd);
 		}
 		br_h.close();

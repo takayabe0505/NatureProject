@@ -11,6 +11,21 @@ import java.util.HashMap;
 
 public class CreateOutPutFile {
 
+	public static void main(String[] args) throws IOException{
+
+		String disaster_date = "20150512";
+		String level = "4";
+		String  respath  = "/home/t-tyabe/NatureExp/results/";
+		
+		File out = new File(respath+disaster_date+"_"+level+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
+		
+		File out1 = new File(respath+disaster_date+"_forplot1day.csv");
+		CreateOutPutFile.modify_1day(out, out1);
+
+		File out2 = new File(respath+disaster_date+"_forplot2days.csv");
+		CreateOutPutFile.modify_2days(out, out2);
+	}
+	
 	public static void modify_2days(File in, File out) throws IOException{
 		
 		HashMap<String, ArrayList<String>> OD_data = new HashMap<String, ArrayList<String>>();
@@ -39,7 +54,7 @@ public class CreateOutPutFile {
 		BufferedReader br2 = new BufferedReader(new FileReader(in));
 		BufferedWriter bw  = new BufferedWriter(new FileWriter(out));
 		String line2 = null;
-		while((line2=br.readLine())!=null){
+		while((line2=br2.readLine())!=null){
 			String[] tokens = line2.split(",");
 //			String date = tokens[0];
 			String day_code = tokens[1];
@@ -94,7 +109,7 @@ public class CreateOutPutFile {
 		BufferedReader br2 = new BufferedReader(new FileReader(in));
 		BufferedWriter bw  = new BufferedWriter(new FileWriter(out));
 		String line2 = null;
-		while((line2=br.readLine())!=null){
+		while((line2=br2.readLine())!=null){
 			String[] tokens = line2.split(",");
 //			String date = tokens[0];
 			String day_code = tokens[1];

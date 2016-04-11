@@ -41,7 +41,7 @@ public class MainFlow {
 	public static void entireflow(String disaster_date, HashSet<String> calculated_days) throws IOException, ParseException{ // <-- for each disaster day
 
 		//		File out = new File("c:/users/yabetaka/desktop/testresults_10mins_typhoon_km.csv"); //day, time, flowamount
-		File out = new File(homepath+disaster_date+".csv"); //day, code, time, flow **code=DD,ND,OD
+		File out = new File(homepath+disaster_date+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
 
 		HashMap<String, HashMap<Integer, Double>> result = new HashMap<String, HashMap<Integer, Double>>();
 
@@ -189,6 +189,9 @@ public class MainFlow {
 						}
 					}
 				}
+			}
+			else{
+				System.out.println(line);
 			}
 		}
 		br.close();

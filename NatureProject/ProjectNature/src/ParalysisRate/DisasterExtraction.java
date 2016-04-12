@@ -41,9 +41,10 @@ public class DisasterExtraction {
 			String[] tokens = line.split(",");
 			String[] ymd = tokens[0].split(" "); //tokens[0] = yyyy/mm/dd hh:mm:ss
 			String date = ymd[0];
+			String yyyymmdd = date.substring(0,4)+date.substring(5,7)+date.substring(8,10);
 			String hour = ymd[1].split(":")[0];
 			String type = tokens[1];
-			Double level = Double.parseDouble(tokens[2]);
+			Integer level = Integer.valueOf(tokens[2]);
 			String[] codes = tokens[3].split(" ");
 
 			Double productsum = 0d;
@@ -54,7 +55,7 @@ public class DisasterExtraction {
 					productsum = productsum + level*code_pop;
 				}
 			}
-			bw.write(date+","+type+","+hour+","+String.valueOf(productsum)+","+String.valueOf(codes.length)+","+String.valueOf(level));
+			bw.write(yyyymmdd+","+type+","+hour+","+String.valueOf(productsum)+","+String.valueOf(codes.length)+","+String.valueOf(level));
 			bw.newLine();
 		}
 		br.close();

@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
@@ -99,16 +100,16 @@ public class MainFlow {
 				//File in = new File("c:/users/yabetaka/desktop/data/snowGPS/Data/Tokyo-Snow_13/1421134801_13/13_2013"+month+String.valueOf(i)+".csv");
 
 				HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
-				
-				if(GPSLogdataIntoMap.tokenscheck(in)==7){
-					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min);
-				}
-				else if(GPSLogdataIntoMap.tokenscheck(in)==6){
-					map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
+
+				Date d_date = YMD.parse(d.substring(0,4)+"-"+d.substring(4,6)+"-"+d.substring(6,8)+"-");
+				if(d_date.before(YMD.parse("2015-11-01"))){
+					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 0);
+					if(map.keySet().size()<=15000){
+						map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
+					}
 				}
 				else{
-					map = null;
-					System.out.println("oops!");
+					map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
 				}
 
 				System.out.println("done putting id and logs into map "+map.size());

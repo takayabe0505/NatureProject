@@ -28,7 +28,7 @@ public class GPSLogdataIntoMap {
 		return num;
 	}
 
-	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, Integer max_id_count, Double bin, int min) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
+	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, Integer max_id_count, Double bin, int min, int id_token) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
 
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
@@ -41,7 +41,7 @@ public class GPSLogdataIntoMap {
 		while((line1=br1.readLine())!=null){
 			String[] tokens = line1.split("\t"); 
 			if(tokens.length==7){
-				String id_br1 = tokens[1];
+				String id_br1 = tokens[id_token];
 				if(!id_br1.equals("null")){
 					if(tokens[4].length()>=18){
 						Double lon = Double.parseDouble(tokens[3]);
@@ -78,7 +78,7 @@ public class GPSLogdataIntoMap {
 		while((line=br.readLine()) != null){
 			String[] tokens = line.split("\t");
 			if(tokens.length==7){
-				String id = tokens[1];
+				String id = tokens[id_token];
 				//			String date = tokens[1].split(" ")[0];
 				if(!id.equals("null")){
 					if(tokens[4].length()>=18){
@@ -108,7 +108,7 @@ public class GPSLogdataIntoMap {
 		return map;
 	}
 
-	public static HashMap<String, TreeMap<Integer,LonLat>> intomap6(File in, Integer max_id_count, Double bin, int min) throws IOException{ 
+	public static HashMap<String, TreeMap<Integer,LonLat>> intomap6(File in, Integer max_id_count, Double bin, int min) throws IOException{ //after 11/1
 
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
@@ -120,7 +120,7 @@ public class GPSLogdataIntoMap {
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
 			String[] tokens = line1.split("\t"); 
-			if(tokens.length==6){
+			if(tokens.length==7){
 				String id_br1 = tokens[0];
 				if(!id_br1.equals("null")){
 					if(tokens[3].length()>=18){
@@ -157,7 +157,7 @@ public class GPSLogdataIntoMap {
 		String line = null;
 		while((line=br.readLine()) != null){
 			String[] tokens = line.split("\t");
-			if(tokens.length==6){
+			if(tokens.length==7){
 				String id = tokens[0];
 				//			String date = tokens[1].split(" ")[0];
 				if(!id.equals("null")){

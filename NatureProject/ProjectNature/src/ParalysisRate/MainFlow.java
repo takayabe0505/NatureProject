@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
@@ -98,15 +97,8 @@ public class MainFlow {
 				File in = new File("/home/t-tyabe/Data/grid/0/tmp/ktsubouc/gps_"+d+".csv");
 				//File in = new File("c:/users/yabetaka/desktop/data/snowGPS/Data/Tokyo-Snow_13/1421134801_13/13_2013"+month+String.valueOf(i)+".csv");
 
-				Date d_date = YMD.parse(d.substring(0,4)+"-"+d.substring(4,6)+"-"+d.substring(6,8));
+				HashMap<String, TreeMap<Integer,LonLat>> map = GPSLogdataIntoMap.intomap7(in, count_normaldays, bin);
 
-				HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
-				if((d_date.before(YMD.parse("2015-10-31")))||(d_date.equals("2015-11-01"))){
-					map = GPSLogdataIntoMap.intomap7(in, count_normaldays, bin);
-				}
-				else{
-					map = GPSLogdataIntoMap.intomap6(in, count_normaldays, bin);
-				}
 				System.out.println("done putting id and logs into map "+map.size());
 
 				for(String id : map.keySet()){

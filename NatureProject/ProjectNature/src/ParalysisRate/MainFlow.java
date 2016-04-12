@@ -20,24 +20,28 @@ public class MainFlow {
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  respath  = "/home/t-tyabe/NatureExp/results/";
+	public static String  respath  = "/home/t-tyabe/NatureExp/test/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 	public static File    holidays = new File(homepath+"holidays.csv");
 
 	public static void main(String args[]) throws IOException, ParseException{
 		File homepath_root = new File(homepath); homepath_root.mkdir();
+		File respath_file  = new File(respath);  respath_file.mkdir();
 
-		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
-		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
-		String line = null;
-
-		while((line=br.readLine())!=null){
-			String[] tokens = line.split(",");
-			String disaster_date = tokens[0];
-			String level = tokens[1];
-			entireflow(disaster_date,level); // line = disaster_date = YYYYMMDD
-		}
-		br.close();
+//		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
+//		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
+//		String line = null;
+//
+//		while((line=br.readLine())!=null){
+//			String[] tokens = line.split(",");
+//			String disaster_date = tokens[0];
+//			String level = tokens[1];
+//			entireflow(disaster_date,level); // line = disaster_date = YYYYMMDD
+//		}
+//		br.close();
+		
+		entireflow("20150417","4");
+		
 
 	}
 

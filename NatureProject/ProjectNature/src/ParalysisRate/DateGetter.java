@@ -30,6 +30,7 @@ public class DateGetter {
 		File dislogs = new File(dislog);
 		HashSet<String> res = new HashSet<String>();
 		HashSet<String> DisDays = getDisDays(dislogs);
+		System.out.println(DisDays); //TODO erase
 
 		String year  = disDate.substring(0,4);
 		String month = disDate.substring(4,6);

@@ -165,13 +165,14 @@ public class MainFlow {
 						Double lon = Double.parseDouble(tokens[3]);
 						Double lat = Double.parseDouble(tokens[2]);
 						if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
-							bw.write(String.valueOf(lon)+","+String.valueOf(lat));
+							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
 							bw.newLine();
 							if(tempmap.containsKey(id_br1)){
 								Integer newval = tempmap.get(id_br1)+1;
 								tempmap.put(id_br1, newval);
-								if(tempmap.get(id_br1)==3){ //TODO change minumum points 
+								if(tempmap.get(id_br1)==5){ //TODO change minumum points 
 									IDs_insidearea.add(id_br1);
+									System.out.println(id_br1); //TODO delete this 
 								}
 							}
 							else{

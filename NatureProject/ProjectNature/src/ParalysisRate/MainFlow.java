@@ -16,11 +16,11 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 
 public class MainFlow {
 
-	public static Integer max_id_count = 10; //TODO change numbers 
+	public static Integer max_id_count = 20000; //TODO change numbers 
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  respath  = "/home/t-tyabe/NatureExp/test/";
+	public static String  respath  = "/home/t-tyabe/NatureExp/results0412/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 	public static File    holidays = new File(homepath+"holidays.csv");
 
@@ -28,19 +28,19 @@ public class MainFlow {
 		File homepath_root = new File(homepath); homepath_root.mkdir();
 		File respath_file  = new File(respath);  respath_file.mkdir();
 
-//		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
-//		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
-//		String line = null;
-//
-//		while((line=br.readLine())!=null){
-//			String[] tokens = line.split(",");
-//			String disaster_date = tokens[0];
-//			String level = tokens[1];
-//			entireflow(disaster_date,level); // line = disaster_date = YYYYMMDD
-//		}
-//		br.close();
+		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
+		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
+		String line = null;
+
+		while((line=br.readLine())!=null){
+			String[] tokens = line.split(",");
+			String disaster_date = tokens[0];
+			String level = tokens[1];
+			entireflow(disaster_date,level); // line = disaster_date = YYYYMMDD
+		}
+		br.close();
 		
-		entireflow("20150417","4");
+//		entireflow("20150417","4"); //FOR test only. 
 		
 
 	}
@@ -153,8 +153,8 @@ public class MainFlow {
 		HashMap<String,Integer> tempmap = new HashMap<String,Integer>();
 		
 		BufferedReader br1 = new BufferedReader(new FileReader(in));
-		File out_points = new File(respath+"points_inside.csv");
-		BufferedWriter bw  = new BufferedWriter(new FileWriter(out_points));
+//		File out_points = new File(respath+"points_inside.csv");
+//		BufferedWriter bw  = new BufferedWriter(new FileWriter(out_points));
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
 			String[] tokens = line1.split("\t"); 
@@ -165,14 +165,14 @@ public class MainFlow {
 						Double lon = Double.parseDouble(tokens[3]);
 						Double lat = Double.parseDouble(tokens[2]);
 						if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
-							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
-							bw.newLine();
+//							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
+//							bw.newLine();
 							if(tempmap.containsKey(id_br1)){
 								Integer newval = tempmap.get(id_br1)+1;
 								tempmap.put(id_br1, newval);
 								if(tempmap.get(id_br1)==5){ //TODO change minumum points 
 									IDs_insidearea.add(id_br1);
-									System.out.println(id_br1); //TODO delete this 
+//									System.out.println(id_br1); //TODO delete this 
 								}
 							}
 							else{
@@ -188,7 +188,7 @@ public class MainFlow {
 			}
 		}
 		br1.close();
-		bw.close();
+//		bw.close();
 
 		HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>(); //id, time, location
 		BufferedReader br = new BufferedReader(new FileReader(in));

@@ -12,7 +12,7 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 
 public class GPSLogdataIntoMap {
 
-	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, Integer max_id_count, Double bin) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
+	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, Integer max_id_count, Double bin, int min) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
 
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
@@ -36,7 +36,7 @@ public class GPSLogdataIntoMap {
 							if(tempmap.containsKey(id_br1)){
 								Integer newval = tempmap.get(id_br1)+1;
 								tempmap.put(id_br1, newval);
-								if(tempmap.get(id_br1)==5){ //TODO change minumum points 
+								if(tempmap.get(id_br1)==min){ //TODO change minumum points 
 									IDs_insidearea.add(id_br1);
 									//									System.out.println(id_br1); //TODO delete this 
 								}

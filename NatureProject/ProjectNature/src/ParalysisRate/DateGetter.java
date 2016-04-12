@@ -63,7 +63,7 @@ public class DateGetter {
 				if(!((youbi.equals("6"))||(youbi.equals("7")))){
 					String day_2dig   = String.format("%02d", i);
 					String date = year+month+day_2dig;
-					if(!(DisDays.contains(d))){
+					if(!(DisDays.contains(date))){
 						if(!holi_set.contains(date)){
 							res.add(date);
 							if(res.size()==10){

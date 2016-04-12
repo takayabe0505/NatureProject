@@ -23,6 +23,21 @@ public class SmallMethods {
 		return total_mins;
 	}
 	
+	public static String getCode2(String code, Integer count){
+		if(code.equals("OD")){
+			return String.valueOf(count);
+		}
+		else if(code.equals("ND")){
+			return "98";
+		}
+		else if(code.equals("DD")){
+			return "99";
+		}
+		else{
+			return "shit";
+		}
+	}
+	
 	public static String convertYtime(String t){
 		String[] x = t.split("T");
 		String time = x[1].substring(0,8);

@@ -73,11 +73,12 @@ public class MainFlow {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
 
 		int count_normaldays = 1;
+		
 		for(String d : datesforexp){
 			String code = SmallMethods.code_of_day(d, day);
-			String code_2 = code;
+			String code_2 = SmallMethods.getCode2(code, count_normaldays);
+			
 			if(code.equals("OD")){
-				code_2="OD"+String.valueOf(count_normaldays);
 				count_normaldays++;
 			}
 

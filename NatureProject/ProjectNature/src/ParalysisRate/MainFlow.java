@@ -105,6 +105,7 @@ public class MainFlow {
 				if(d_date.before(YMD.parse("2015-11-01"))){
 					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 0);
 					if(map.keySet().size()<=15000){
+						System.out.println("couldn't get 20000 ids so trying again...");
 						map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
 					}
 				}

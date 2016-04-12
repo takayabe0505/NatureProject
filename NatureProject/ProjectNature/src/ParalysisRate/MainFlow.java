@@ -16,7 +16,7 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 
 public class MainFlow {
 
-	public static Integer max_id_count = 10000;
+	public static Integer max_id_count = 10; //TODO change numbers 
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
@@ -69,9 +69,7 @@ public class MainFlow {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
 
 		int count_normaldays = 1;
-
 		for(String d : datesforexp){
-
 			String code = SmallMethods.code_of_day(d, day);
 			String code_2 = code;
 			if(code.equals("OD")){
@@ -144,13 +142,15 @@ public class MainFlow {
 		bw.close();
 	}
 
-
-
 	public static HashMap<String, TreeMap<Integer,LonLat>> intomap(File in) throws IOException{
-
-		// read GPS log file 
+		
+		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
+		HashMap<String,Integer> tempmap = new HashMap<String,Integer>();
+		
 		BufferedReader br1 = new BufferedReader(new FileReader(in));
+		File out_points = new File(respath+"points_inside.csv");
+		BufferedWriter bw  = new BufferedWriter(new FileWriter(out_points));
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
 			String[] tokens = line1.split("\t"); 
@@ -161,8 +161,18 @@ public class MainFlow {
 						Double lon = Double.parseDouble(tokens[3]);
 						Double lat = Double.parseDouble(tokens[2]);
 						if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
-							IDs_insidearea.add(id_br1);
-							//System.out.println("number of ids: "+IDs_insidearea.size());
+							bw.write(String.valueOf(lon)+","+String.valueOf(lat));
+							bw.newLine();
+							if(tempmap.containsKey(id_br1)){
+								Integer newval = tempmap.get(id_br1)+1;
+								tempmap.put(id_br1, newval);
+								if(tempmap.get(id_br1)==3){ //TODO change minumum points 
+									IDs_insidearea.add(id_br1);
+								}
+							}
+							else{
+								tempmap.put(id_br1, 1);
+							}
 						}
 						if(IDs_insidearea.size()==max_id_count){
 							System.out.println("successfully got "+max_id_count+" ids.");
@@ -173,6 +183,7 @@ public class MainFlow {
 			}
 		}
 		br1.close();
+		bw.close();
 
 		HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>(); //id, time, location
 		BufferedReader br = new BufferedReader(new FileReader(in));

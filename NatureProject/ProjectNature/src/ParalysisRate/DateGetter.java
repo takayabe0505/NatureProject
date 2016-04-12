@@ -25,7 +25,7 @@ public class DateGetter {
 			holi_set.add(yyyymmdd);
 		}
 		br_h.close();
-		System.out.println(holi_set); //TODO erase
+//		System.out.println(holi_set); //TODO erase
 
 		File dislogs = new File(dislog);
 		HashSet<String> res = new HashSet<String>();
@@ -87,15 +87,18 @@ public class DateGetter {
 			String[] ymd = tokens[0].split("/");
 			String year = ymd[0];
 			String month = ymd[1];
+			String month_2dig = String.format("%02d", Integer.valueOf(month));
 			String daytime = ymd[2];
 			String[] d_t = daytime.split(" ");
 			String day = d_t[0];
+			String day_2dig = String.format("%02d", Integer.valueOf(day));
+
 
 			Date d = SDF_TS.parse("2014-10-20");
 			Date d2 = SDF_TS.parse("2015-11-07");
 			Date date = SDF_TS.parse(year+"-"+month+"-"+day);
 			if((date.after(d))&&(date.before(d2))){
-				res.add(year+month+day);
+				res.add(year+month_2dig+day_2dig);
 			}
 		}
 		br.close();

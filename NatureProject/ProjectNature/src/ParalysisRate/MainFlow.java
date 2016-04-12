@@ -18,8 +18,8 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 public class MainFlow {
 
 	public static Integer max_id_count = 20000; //TODO change numbers 
-	public static Integer min = 5;
-	
+	public static Integer min = 10;
+
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
 	public static String  respath  = "/home/t-tyabe/NatureExp/results0412/";
@@ -98,7 +98,18 @@ public class MainFlow {
 				File in = new File("/home/t-tyabe/Data/grid/0/tmp/ktsubouc/gps_"+d+".csv");
 				//File in = new File("c:/users/yabetaka/desktop/data/snowGPS/Data/Tokyo-Snow_13/1421134801_13/13_2013"+month+String.valueOf(i)+".csv");
 
-				HashMap<String, TreeMap<Integer,LonLat>> map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min);
+				HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
+				
+				if(GPSLogdataIntoMap.tokenscheck(in)==7){
+					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min);
+				}
+				else if(GPSLogdataIntoMap.tokenscheck(in)==6){
+					map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
+				}
+				else{
+					map = null;
+					System.out.println("oops!");
+				}
 
 				System.out.println("done putting id and logs into map "+map.size());
 

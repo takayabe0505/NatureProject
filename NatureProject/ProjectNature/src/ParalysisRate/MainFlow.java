@@ -23,7 +23,7 @@ public class MainFlow {
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  respath  = "/home/t-tyabe/NatureExp/results0412/";
+	public static String  respath  = "/home/t-tyabe/NatureExp/results0413/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 	public static File    holidays = new File(homepath+"holidays.csv");
 

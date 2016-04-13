@@ -18,7 +18,7 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 
 public class MainFlow {
 
-	public static Integer max_id_count = 20000; //TODO change numbers 
+	public static Integer max_id_count = 500000; //TODO change numbers 
 	public static Integer min = 10;
 
 	public static Double  bin = 15d;
@@ -31,6 +31,7 @@ public class MainFlow {
 		File homepath_root = new File(homepath); homepath_root.mkdir();
 		File respath_file  = new File(respath);  respath_file.mkdir();
 
+		File results_day_ids_points = new File(respath+"day_id_points.csv");
 		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
 		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
 		String line = null;
@@ -39,7 +40,7 @@ public class MainFlow {
 			String[] tokens = line.split(",");
 			String disaster_date = tokens[0];
 			String level = tokens[1];
-			entireflow(disaster_date,level); // line = disaster_date = YYYYMMDD
+			entireflow(disaster_date,level,results_day_ids_points); // line = disaster_date = YYYYMMDD
 		}
 		br.close();
 
@@ -50,11 +51,11 @@ public class MainFlow {
 
 	protected static final SimpleDateFormat YMD = new SimpleDateFormat("yyyy-MM-dd");//change time format
 
-	public static void entireflow(String disaster_date,String level) throws IOException, ParseException{ // <-- for each disaster day
+	public static void entireflow(String disaster_date,String level,File results_day_ids_points) throws IOException, ParseException{ // <-- for each disaster day
 
 		//		File out = new File("c:/users/yabetaka/desktop/testresults_10mins_typhoon_km.csv"); //day, time, flowamount
 		File out = new File(respath+disaster_date+"_"+level+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
-
+		
 		HashMap<String, HashMap<Integer, Double>> result = new HashMap<String, HashMap<Integer, Double>>();
 
 		HashSet<String> exp_dates = DateGetter.getTargetDates(disaster_date, dislog, holidays);
@@ -62,7 +63,7 @@ public class MainFlow {
 		exp_dates.add(DateGetter.nextday(disaster_date));
 		System.out.println("days for exp are; "+exp_dates);
 
-		runforday(out,result,disaster_date,exp_dates);
+		runforday(out,result,disaster_date,exp_dates,results_day_ids_points);
 		System.out.println("done "+disaster_date);
 
 		File out1 = new File(respath+disaster_date+"_forplot1day.csv");
@@ -73,10 +74,12 @@ public class MainFlow {
 
 	}
 
-	public static void runforday(File out, HashMap<String, HashMap<Integer, Double>> result, String day, HashSet<String> datesforexp) throws IOException, ParseException{	
+	public static void runforday(File out, HashMap<String, HashMap<Integer, Double>> result, String day, 
+			HashSet<String> datesforexp, File results_day_ids_points) throws IOException, ParseException{	
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
-
+		BufferedWriter bw_idpoints = new BufferedWriter(new FileWriter(results_day_ids_points, true));
+				
 		int count_normaldays = 1;
 
 		for(String d : datesforexp){
@@ -105,7 +108,7 @@ public class MainFlow {
 				if(d_date.before(YMD.parse("2015-11-01"))){
 					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 0);
 					if(map.keySet().size()<=15000){
-						System.out.println("couldn't get 20000 ids so trying again...");
+						System.out.println("couldn't get 500000 ids so trying again...");
 						map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
 					}
 				}
@@ -113,6 +116,13 @@ public class MainFlow {
 					map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
 				}
 
+				Integer totalpoints = 0;
+				for(String id : map.keySet()){
+					totalpoints = totalpoints + map.get(id).size();
+				}
+				bw_idpoints.write(d+","+map.keySet().size()+","+String.valueOf(totalpoints));
+				bw_idpoints.newLine();
+				
 				System.out.println("done putting id and logs into map "+map.size());
 
 				for(String id : map.keySet()){
@@ -163,6 +173,7 @@ public class MainFlow {
 			}
 		}
 		bw.close();
+		bw_idpoints.close();
 	}
 
 

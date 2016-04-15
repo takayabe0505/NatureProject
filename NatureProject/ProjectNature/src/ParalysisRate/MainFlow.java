@@ -49,7 +49,7 @@ public class MainFlow {
 
 	}
 
-	protected static final SimpleDateFormat YMD = new SimpleDateFormat("yyyy-MM-dd");//change time format
+	protected static final SimpleDateFormat YMD = new SimpleDateFormat("yyyyMMdd");//change time format
 
 	public static void entireflow(String disaster_date,String level,File results_day_ids_points) throws IOException, ParseException{ // <-- for each disaster day
 
@@ -60,7 +60,7 @@ public class MainFlow {
 
 		HashSet<String> exp_dates = DateGetter.getTargetDates(disaster_date, dislog, holidays);
 		exp_dates.add(disaster_date);
-		exp_dates.add(DateGetter.nextday(disaster_date));
+		exp_dates.add(DateGetter.nextday_str(disaster_date));
 		System.out.println("days for exp are; "+exp_dates);
 
 		runforday(out,result,disaster_date,exp_dates,results_day_ids_points);
@@ -104,8 +104,8 @@ public class MainFlow {
 
 				HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
 
-				Date d_date = YMD.parse(d.substring(0,4)+"-"+d.substring(4,6)+"-"+d.substring(6,8)+"-");
-				if(d_date.before(YMD.parse("2015-11-01"))){
+				Date d_date = YMD.parse(d);
+				if(d_date.before(YMD.parse("20151101"))){
 					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 0);
 					if(map.keySet().size()<=15000){
 						System.out.println("couldn't get 500000 ids so trying again...");

@@ -35,13 +35,13 @@ public class DateGetter {
 		String year  = disDate.substring(0,4);
 		String month = disDate.substring(4,6);
 		String day   = disDate.substring(6,8);
-		Date disaster_date = SDF_TS.parse(year+"-"+month+"-"+day);
+		Date disaster_date = SDF_TS.parse(year+month+day);
 		String disaster_youbi = (new SimpleDateFormat("u")).format(disaster_date);
 
 		if(disaster_youbi.equals("6")||disaster_youbi.equals("7")){
 			for(int i=1; i<=28; i++){
 				String day_candidate = String.valueOf(i);
-				Date d = SDF_TS.parse(year+"-"+month+"-"+day_candidate);
+				Date d = SDF_TS.parse(year+month+day_candidate);
 				String youbi = (new SimpleDateFormat("u")).format(d);
 				if((youbi.equals("6"))||(youbi.equals("7"))){
 					String day_2dig   = String.format("%02d", i);
@@ -58,7 +58,7 @@ public class DateGetter {
 		else{
 			for(int i=1; i<=28; i++){
 				String day_candidate = String.valueOf(i);
-				Date d = SDF_TS.parse(year+"-"+month+"-"+day_candidate);
+				Date d = SDF_TS.parse(year+month+day_candidate);
 				String youbi = (new SimpleDateFormat("u")).format(d);
 				if(!((youbi.equals("6"))||(youbi.equals("7")))){
 					String day_2dig   = String.format("%02d", i);
@@ -77,7 +77,7 @@ public class DateGetter {
 		return res;
 	}
 
-	protected static final SimpleDateFormat SDF_TS = new SimpleDateFormat("yyyy-MM-dd");//change time format
+	protected static final SimpleDateFormat SDF_TS = new SimpleDateFormat("yyyyMMdd");//change time format
 
 	public static HashSet<String> getDisDays(File dislogs) throws IOException, ParseException{
 		HashSet<String> res = new HashSet<String>();
@@ -95,9 +95,9 @@ public class DateGetter {
 			String day_2dig = String.format("%02d", Integer.valueOf(day));
 
 
-			Date d = SDF_TS.parse("2014-10-20");
-			Date d2 = SDF_TS.parse("2015-11-07");
-			Date date = SDF_TS.parse(year+"-"+month+"-"+day);
+			Date d = SDF_TS.parse("20141020");
+			Date d2 = SDF_TS.parse("20151107");
+			Date date = SDF_TS.parse(year+month_2dig+day_2dig);
 			if((date.after(d))&&(date.before(d2))){
 				res.add(year+month_2dig+day_2dig);
 			}
@@ -106,10 +106,9 @@ public class DateGetter {
 		return res;
 	}
 
-	public static String nextday(String day) throws ParseException{
+	public static String nextday_str(String day) throws ParseException{
 
-		String d_str = day.substring(0,4)+"-"+day.substring(4,6)+"-"+day.substring(6,8);
-		Date d = SDF_TS.parse(d_str);
+		Date d = SDF_TS.parse(day);
 
 		Calendar nextCal = Calendar.getInstance();
 		nextCal.setTime(d);
@@ -120,5 +119,14 @@ public class DateGetter {
 		return d_next;
 	}
 
+	public static Date nextday_date(Date day) throws ParseException{
 
+		Calendar nextCal = Calendar.getInstance();
+		nextCal.setTime(day);
+		nextCal.add(Calendar.DAY_OF_MONTH, 1);
+		Date nextDate = nextCal.getTime();
+
+		return nextDate;
+	}
+	
 }

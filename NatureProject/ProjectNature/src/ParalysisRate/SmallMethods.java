@@ -59,7 +59,7 @@ public class SmallMethods {
 		if(day.equals(disaster_day)){
 			return "DD"; //day of disaster
 		}
-		else if(day.equals(DateGetter.nextday(disaster_day))){
+		else if(day.equals(DateGetter.nextday_str(disaster_day))){
 			return "ND"; //next day from disaster
 		}
 		else{

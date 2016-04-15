@@ -7,7 +7,7 @@ public class testDateConvert {
 	public static void main(String[] args) throws ParseException{
 		
 		String in = "20151231";
-		String res = DateGetter.nextday(in);
+		String res = DateGetter.nextday_str(in);
 		System.out.println(res);
 		
 	}

@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
@@ -23,7 +22,7 @@ public class MainFlow {
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  respath  = "/home/t-tyabe/NatureExp/results0413/";
+	public static String  respath  = "/home/t-tyabe/NatureExp/results0418/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 	public static File    holidays = new File(homepath+"holidays.csv");
 
@@ -32,7 +31,7 @@ public class MainFlow {
 		File respath_file  = new File(respath);  respath_file.mkdir();
 
 		File results_day_ids_points = new File(respath+"day_id_points.csv");
-		File dates_of_disaster = new File(homepath+"dates_of_disaster.csv");
+		File dates_of_disaster = new File(homepath+"dates_of_disaster_snow.csv");
 		BufferedReader br = new BufferedReader(new FileReader(dates_of_disaster));
 		String line = null;
 
@@ -55,7 +54,7 @@ public class MainFlow {
 
 		//		File out = new File("c:/users/yabetaka/desktop/testresults_10mins_typhoon_km.csv"); //day, time, flowamount
 		File out = new File(respath+disaster_date+"_"+level+"_results.csv"); //day, code, time, flow **code=DD,ND,OD
-		
+
 		HashMap<String, HashMap<Integer, Double>> result = new HashMap<String, HashMap<Integer, Double>>();
 
 		HashSet<String> exp_dates = DateGetter.getTargetDates(disaster_date, dislog, holidays);
@@ -79,7 +78,7 @@ public class MainFlow {
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out, true));
 		BufferedWriter bw_idpoints = new BufferedWriter(new FileWriter(results_day_ids_points, true));
-				
+
 		int count_normaldays = 1;
 
 		for(String d : datesforexp){
@@ -104,17 +103,17 @@ public class MainFlow {
 
 				HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
 
-				Date d_date = YMD.parse(d);
-				if(d_date.before(YMD.parse("20151101"))){
-					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 0);
-					if(map.keySet().size()<=15000){
-						System.out.println("couldn't get 500000 ids so trying again...");
-						map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
-					}
-				}
-				else{
-					map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
-				}
+				//				Date d_date = YMD.parse(d);
+				//				if(d_date.before(YMD.parse("20151101"))){
+				map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
+				//					if(map.keySet().size()<=15000){
+				//						System.out.println("couldn't get 500000 ids so trying again...");
+				//						map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
+				//					}
+				//				}
+				//				else{
+				//					map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
+				//				}
 
 				Integer totalpoints = 0;
 				for(String id : map.keySet()){
@@ -122,7 +121,7 @@ public class MainFlow {
 				}
 				bw_idpoints.write(d+","+map.keySet().size()+","+String.valueOf(totalpoints));
 				bw_idpoints.newLine();
-				
+
 				System.out.println("done putting id and logs into map "+map.size());
 
 				for(String id : map.keySet()){

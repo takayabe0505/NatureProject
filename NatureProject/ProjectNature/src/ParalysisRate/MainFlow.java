@@ -147,7 +147,7 @@ public class MainFlow {
 					}
 					else{
 						bw.write(d+","+code+","+String.valueOf(time)+","+","+code_2);
-						bw_each.write(d+","+String.valueOf(time)+",");
+						bw_each.write(d+","+String.valueOf(time)+",0");
 					}
 					bw.newLine();				
 					bw_each.newLine();

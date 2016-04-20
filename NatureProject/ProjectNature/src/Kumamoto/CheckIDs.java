@@ -14,7 +14,6 @@ import java.util.List;
 import jp.ac.ut.csis.pflow.geom.GeometryChecker;
 import jp.ac.ut.csis.pflow.geom.LonLat;
 import jp.ac.ut.csis.pflow.obs.aggre.MeshTrafficVolume;
-import ParalysisRate.SmallMethods;
 
 public class CheckIDs {
 
@@ -22,15 +21,26 @@ public class CheckIDs {
 	static GeometryChecker gchecker = new GeometryChecker(shapedir);
 
 	public static String  homepath = "/home/t-tyabe/Kumamoto/";
-	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_4/";
+	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_3/";
 
 	public static void uncompress_run(String yyyymmdd) throws IOException{
-		SmallMethods.extractfromcommand2(yyyymmdd); System.out.println("#done uncompressing ");
+//		SmallMethods.extractfromcommand2(yyyymmdd); System.out.println("#done uncompressing ");
 
 		File in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/data_"+yyyymmdd+".csv");
 
 		//		for(int i=0; i<=23; i++){
-		int i = 20;
+//		int i = 20;
+//		File out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
+//		writeout_byhour(in, out, i);
+//		
+//		File out_mesh3 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh3.csv");
+//		aggregate(out,out_mesh3,3);
+//		File out_mesh4 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh4.csv");
+//		aggregate(out,out_mesh4,4);
+//		File out_mesh5 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh5.csv");
+//		aggregate(out,out_mesh5,5);
+//		
+		int i = 22;
 		File out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
 		writeout_byhour(in, out, i);
 		
@@ -40,19 +50,8 @@ public class CheckIDs {
 		aggregate(out,out_mesh4,4);
 		File out_mesh5 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh5.csv");
 		aggregate(out,out_mesh5,5);
-		
-		i = 22;
-		out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
-		writeout_byhour(in, out, i);
-		
-		out_mesh3 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh3.csv");
-		aggregate(out,out_mesh3,3);
-		out_mesh4 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh4.csv");
-		aggregate(out,out_mesh4,4);
-		out_mesh5 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh5.csv");
-		aggregate(out,out_mesh5,5);
 		//		}
-		
+		in.delete();
 	}
 
 	public static void writeout_byhour(File in, File out, int hour) throws IOException{

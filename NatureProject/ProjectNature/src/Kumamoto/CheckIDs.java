@@ -22,7 +22,7 @@ public class CheckIDs {
 	static GeometryChecker gchecker = new GeometryChecker(shapedir);
 
 	public static String  homepath = "/home/t-tyabe/Kumamoto/";
-	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_3/";
+	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_4/";
 
 	public static void uncompress_run(String yyyymmdd) throws IOException{
 		SmallMethods.extractfromcommand2(yyyymmdd); System.out.println("#done uncompressing ");
@@ -40,9 +40,19 @@ public class CheckIDs {
 		aggregate(out,out_mesh4,4);
 		File out_mesh5 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh5.csv");
 		aggregate(out,out_mesh5,5);
+		
+		i = 22;
+		out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
+		writeout_byhour(in, out, i);
+		
+		out_mesh3 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh3.csv");
+		aggregate(out,out_mesh3,3);
+		out_mesh4 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh4.csv");
+		aggregate(out,out_mesh4,4);
+		out_mesh5 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh5.csv");
+		aggregate(out,out_mesh5,5);
 		//		}
-
-		in.delete();
+		
 	}
 
 	public static void writeout_byhour(File in, File out, int hour) throws IOException{
@@ -55,7 +65,7 @@ public class CheckIDs {
 //		int count1 = 0;
 		while((line=br.readLine())!=null){
 			String[] tokens = line.split("\t");
-			String id = tokens[1];
+			String id = tokens[0];
 			if(id.length()>0){
 				if(tokens.length==7){
 					Integer h = Integer.valueOf(tokens[4].split("T")[1].split(":")[0]);

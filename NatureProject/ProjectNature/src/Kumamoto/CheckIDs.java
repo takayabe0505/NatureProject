@@ -54,7 +54,7 @@ public class CheckIDs {
 					Integer h = Integer.valueOf(tokens[4].split("T")[1].split(":")[0]);
 					if(h==hour){
 						if(!id_already.contains(id)){
-							List<String> zonecodeList = gchecker.listOverlaps("zonecode",Double.parseDouble(tokens[3]),Double.parseDouble(tokens[2]));
+							List<String> zonecodeList = gchecker.listOverlaps("JCODE",Double.parseDouble(tokens[3]),Double.parseDouble(tokens[2]));
 							if(!zonecodeList.isEmpty()){
 								bw.write(line);
 								bw.newLine();

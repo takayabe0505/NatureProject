@@ -22,19 +22,20 @@ public class CheckIDs {
 	static GeometryChecker gchecker = new GeometryChecker(shapedir);
 
 	public static String  homepath = "/home/t-tyabe/Kumamoto/";
-	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420/";
+	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_2/";
 
 	public static void uncompress_run(String yyyymmdd) throws IOException{
 		SmallMethods.extractfromcommand2(yyyymmdd); System.out.println("#done uncompressing ");
 
 		File in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/data_"+yyyymmdd+".csv");
 
-		for(int i=0; i<=23; i++){
-			File out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
-			writeout_byhour(in, out, i);
-			File out_mesh = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh.csv");
-			aggregate(out,out_mesh);
-		}
+		//		for(int i=0; i<=23; i++){
+		int i = 18;
+		File out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
+		writeout_byhour(in, out, i);
+		File out_mesh = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh.csv");
+		aggregate(out,out_mesh);
+		//		}
 
 		in.delete();
 	}
@@ -52,14 +53,13 @@ public class CheckIDs {
 			if(id.length()>0){
 				if(tokens.length==7){
 					Integer h = Integer.valueOf(tokens[4].split("T")[1].split(":")[0]);
-					if(h==hour){
+					if(Math.abs(h-hour)<=2){
 						if(!id_already.contains(id)){
 							List<String> zonecodeList = gchecker.listOverlaps("JCODE",Double.parseDouble(tokens[3]),Double.parseDouble(tokens[2]));
 							if(!zonecodeList.isEmpty()){
 								bw.write(line);
 								bw.newLine();
 								count++;
-
 							}
 							id_already.add(id);
 						}
@@ -76,7 +76,7 @@ public class CheckIDs {
 
 	public static void aggregate(File in, File out){
 		// create instance ////////////////////////////////
-		MeshTrafficVolume volume = new MeshTrafficVolume(5);	 // mesh level=5
+		MeshTrafficVolume volume = new MeshTrafficVolume(4);	 // mesh level=5
 
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(in));

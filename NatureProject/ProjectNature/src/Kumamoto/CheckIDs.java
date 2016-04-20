@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import jp.ac.ut.csis.pflow.geom.GeometryChecker;
@@ -34,27 +35,34 @@ public class CheckIDs {
 			File out_mesh = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh.csv");
 			aggregate(out,out_mesh);
 		}
-		
+
 		in.delete();
 	}
-	
+
 	public static void writeout_byhour(File in, File out, int hour) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		BufferedWriter bw = new BufferedWriter(new FileWriter(out));
 		String line = null;
+		HashSet<String> id_already = new HashSet<String>();
 		int count = 0;
 		int count2 = 0;
 		while((line=br.readLine())!=null){
 			String[] tokens = line.split("\t");
 			String id = tokens[0];
 			if(id.length()>0){
-				Integer h = Integer.valueOf(tokens[4].split("T")[1].split(":")[0]);
-				if(h==hour){
-					List<String> zonecodeList = gchecker.listOverlaps("zonecode",Double.parseDouble(tokens[3]),Double.parseDouble(tokens[2]));
-					if(!zonecodeList.isEmpty()){
-						bw.write(line);
-						bw.newLine();
-						count++;
+				if(tokens.length==7){
+					Integer h = Integer.valueOf(tokens[4].split("T")[1].split(":")[0]);
+					if(h==hour){
+						if(!id_already.contains(id)){
+							List<String> zonecodeList = gchecker.listOverlaps("zonecode",Double.parseDouble(tokens[3]),Double.parseDouble(tokens[2]));
+							if(!zonecodeList.isEmpty()){
+								bw.write(line);
+								bw.newLine();
+								count++;
+
+							}
+							id_already.add(id);
+						}
 					}
 				}
 			}
@@ -76,11 +84,11 @@ public class CheckIDs {
 			int i = 1;
 			while( (line = br.readLine()) != null ) {
 				String[] tokens = line.split("\t");
-//				String pid = tokens[0];
+				//				String pid = tokens[0];
 				double lon = Double.parseDouble(tokens[3]);
 				double lat = Double.parseDouble(tokens[2]);
 				LonLat pos = new LonLat(lon, lat);
-				
+
 				volume.aggregate(String.valueOf(i),0,pos,1,1);
 				i++;
 				if (i % 10000 == 0){
@@ -100,7 +108,7 @@ public class CheckIDs {
 		// file export ////////////////////////////////////
 		volume.export(out);
 	}
-	
+
 	public static void main(String args[]) throws IOException{
 		File home = new File(homepath); home.mkdir();
 		File res = new File(respath); res.mkdir();

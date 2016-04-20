@@ -13,10 +13,10 @@ public class CheckIDs {
 	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420/";
 
 	public static void uncompress_getIDs(String yyyymmdd) throws IOException{
-		SmallMethods.extractfromcommand(yyyymmdd); System.out.println("#done uncompressing ");
+//		SmallMethods.extractfromcommand2(yyyymmdd); System.out.println("#done uncompressing ");
 
 //		HashMap<Integer, Double> resforday = new HashMap<Integer, Double>();
-		File in = new File("/home/t-tyabe/Data/grid/0/tmp/ktsubouc/gps_"+yyyymmdd+".csv");
+		File in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/data_"+yyyymmdd+".csv");
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		String line = null;
 		int count = 0;

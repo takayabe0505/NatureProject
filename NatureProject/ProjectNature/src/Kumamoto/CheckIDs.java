@@ -22,7 +22,7 @@ public class CheckIDs {
 	static GeometryChecker gchecker = new GeometryChecker(shapedir);
 
 	public static String  homepath = "/home/t-tyabe/Kumamoto/";
-	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_2/";
+	public static String  respath  = "/home/t-tyabe/Kumamoto/results0420_3/";
 
 	public static void uncompress_run(String yyyymmdd) throws IOException{
 		SmallMethods.extractfromcommand2(yyyymmdd); System.out.println("#done uncompressing ");
@@ -30,11 +30,16 @@ public class CheckIDs {
 		File in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/data_"+yyyymmdd+".csv");
 
 		//		for(int i=0; i<=23; i++){
-		int i = 18;
+		int i = 20;
 		File out = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+".csv");
 		writeout_byhour(in, out, i);
-		File out_mesh = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh.csv");
-		aggregate(out,out_mesh);
+		
+		File out_mesh3 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh3.csv");
+		aggregate(out,out_mesh3,3);
+		File out_mesh4 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh4.csv");
+		aggregate(out,out_mesh4,4);
+		File out_mesh5 = new File(respath+"/kumamoto_"+yyyymmdd+"_"+String.format("%02d", i)+"_mesh5.csv");
+		aggregate(out,out_mesh5,5);
 		//		}
 
 		in.delete();
@@ -47,9 +52,10 @@ public class CheckIDs {
 		HashSet<String> id_already = new HashSet<String>();
 		int count = 0;
 		int count2 = 0;
+//		int count1 = 0;
 		while((line=br.readLine())!=null){
 			String[] tokens = line.split("\t");
-			String id = tokens[0];
+			String id = tokens[1];
 			if(id.length()>0){
 				if(tokens.length==7){
 					Integer h = Integer.valueOf(tokens[4].split("T")[1].split(":")[0]);
@@ -74,9 +80,9 @@ public class CheckIDs {
 		bw.close();
 	}
 
-	public static void aggregate(File in, File out){
+	public static void aggregate(File in, File out, int mesh_level){
 		// create instance ////////////////////////////////
-		MeshTrafficVolume volume = new MeshTrafficVolume(4);	 // mesh level=5
+		MeshTrafficVolume volume = new MeshTrafficVolume(mesh_level);	 // mesh level=5
 
 		try{
 			BufferedReader br = new BufferedReader(new FileReader(in));
@@ -114,9 +120,14 @@ public class CheckIDs {
 		File res = new File(respath); res.mkdir();
 
 		ArrayList<String> list = new ArrayList<String>();
-		list.add("20160411");
-		list.add("20160412");
-		list.add("20160413");
+		list.add("20151215");
+		list.add("20151216");
+		list.add("20151217");
+		list.add("20151218");
+		list.add("20160127");
+		list.add("20160128");
+		list.add("20160130");
+		list.add("20160129");
 		list.add("20160414");
 		list.add("20160415");
 		list.add("20160416");

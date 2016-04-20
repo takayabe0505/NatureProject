@@ -20,17 +20,19 @@ public class CheckIDs {
 		BufferedReader br = new BufferedReader(new FileReader(in));
 		String line = null;
 		int count = 0;
+		int count2 = 0;
 		while((line=br.readLine())!=null){
 			String[] tokens = line.split("\t");
 			String id = tokens[0];
 			if(id.length()>0){
 				count++;
-				System.out.println(id);
+//				System.out.println(id);
 			}
+			count2++;
 		}
 		System.out.println("======");
 		System.out.println("======");
-		System.out.println(count+" lines have first column");
+		System.out.println(count+" out of "+count2+" lines have first column");
 		br.close();
 	}
 	

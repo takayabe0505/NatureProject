@@ -33,4 +33,11 @@ public class CheckIDs {
 		System.out.println(count+" lines have first column");
 		br.close();
 	}
+	
+	public static void main(String args[]) throws IOException{
+		File home = new File(homepath); home.mkdir();
+		File res = new File(respath); res.mkdir();
+		uncompress_getIDs("20160418");
+	}
+	
 }

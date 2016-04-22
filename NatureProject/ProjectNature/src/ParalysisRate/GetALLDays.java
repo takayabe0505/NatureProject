@@ -23,7 +23,6 @@ public class GetALLDays {
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
 	public static String  respath  = "/home/t-tyabe/NatureExp/Kanazawa_results0415/";
-	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_Kanazawa.csv"; //get dislog file by GetDisasterDates.java
 	public static File    holidays = new File(homepath+"holidays.csv");
 
 	public static String  start_date = "20141021";
@@ -76,7 +75,7 @@ public class GetALLDays {
 			Date d_date = SDF_TS.parse(day);
 			if(d_date.before(SDF_TS.parse("20151101"))){
 				map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
-				if(map.keySet().size()<=10000){
+				if(map.keySet().size()==0){
 					System.out.println("couldn't get 500000 ids so trying again...");
 					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
 				}

@@ -11,8 +11,9 @@ import jp.ac.ut.csis.pflow.geom.LonLat;
 public class SmallMethods {
 
 //	static File shapedir = new File("/home/t-tyabe/Data/Shutokenshp");
-	static File shapedir = new File("/home/t-tyabe/NatureExp/small_Tokyo");
-
+//	static File shapedir = new File("/home/t-tyabe/NatureExp/small_Tokyo");
+	static File shapedir = new File("/home/t-tyabe/NatureExp/KanazawaSHP");
+	
 	static GeometryChecker gchecker = new GeometryChecker(shapedir);
 	
 	public static Integer convertintomins(String time, Double bin){

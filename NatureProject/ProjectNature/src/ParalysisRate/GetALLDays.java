@@ -17,13 +17,13 @@ public class GetALLDays {
 	
 	// for calculating flow rate for all days. we use 2nd ID for all IDs. 
 
-	public static Integer max_id_count = 500000; //TODO change numbers 
-	public static Integer min = 10;
+	public static Integer max_id_count = 200000; //TODO change numbers 
+	public static Integer min = 5;
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  respath  = "/home/t-tyabe/NatureExp/results0415/";
-	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
+	public static String  respath  = "/home/t-tyabe/NatureExp/Kanazawa_results0415/";
+	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_Kanazawa.csv"; //get dislog file by GetDisasterDates.java
 	public static File    holidays = new File(homepath+"holidays.csv");
 
 	public static String  start_date = "20141021";

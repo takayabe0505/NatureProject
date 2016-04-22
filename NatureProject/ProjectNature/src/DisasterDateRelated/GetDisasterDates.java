@@ -17,8 +17,8 @@ public class GetDisasterDates {
 
 	public static void main(String[] args) throws IOException, ParseException{
 		File in = new File("c:/users/t-tyabe/Desktop/DisasterAlertData_20160224.csv");
-		File out = new File("c:/users/t-tyabe/Desktop/DisasterAlertData_shutoken.csv");
-		File jiscodes = new File("c:/users/t-tyabe/desktop/JIScodes.csv");
+		File out = new File("c:/users/t-tyabe/Desktop/DisasterAlertData_Kanazawa.csv");
+		File jiscodes = new File("c:/users/t-tyabe/desktop/JIScodes_kanazawa.csv");
 
 		choosebyAreaDateType(in,out,jiscodes,"2014-10-21","2016-01-06");
 	}

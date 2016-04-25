@@ -31,6 +31,7 @@ public class GPSLogdataIntoMap {
 	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, File shapedir, Integer max_id_count, Double bin, int min, int id_token) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
 
 		int count = 0;
+		int countall = 0;
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
 		HashMap<String,Integer> tempmap = new HashMap<String,Integer>();
@@ -40,6 +41,7 @@ public class GPSLogdataIntoMap {
 		//		BufferedWriter bw  = new BufferedWriter(new FileWriter(out_points));
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
+			countall++;
 			String[] tokens = line1.split("\t"); 
 			if(tokens.length==7){
 				String id_br1 = tokens[id_token];
@@ -50,7 +52,7 @@ public class GPSLogdataIntoMap {
 						if(SmallMethods.AreaOverlap(new LonLat(lon,lat),shapedir).equals("yes")){
 							count++;
 							if(count%10000==0){
-								System.out.println("#got: "+count+" IDs...");
+								System.out.println("#got: "+count+" points out of "+countall);
 							}
 							//							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
 							//							bw.newLine();

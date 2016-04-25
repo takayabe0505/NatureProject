@@ -83,11 +83,15 @@ public class GetALLDays {
 			BufferedWriter bw_each = new BufferedWriter(new FileWriter(out_eachday));
 
 			//disaster_date = YYYYMMDD
-			SmallMethods.extractfromcommand2(day); System.out.println("#done uncompressing ");
+			SmallMethods.extractfromcommand(day); System.out.println("#done uncompressing ");
 
 			HashMap<Integer, Double> resforday = new HashMap<Integer, Double>();
-			File in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/gps_"+day+".csv");
-
+			
+			File in = new File("/home/t-tyabe/Data/grid/0/tmp/ktsubouc/gps_"+day+".csv");
+			if(!in.exists()){
+				in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/gps_"+day+".csv");
+			}
+			
 			HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
 
 //			Date d_date = SDF_TS.parse(day);

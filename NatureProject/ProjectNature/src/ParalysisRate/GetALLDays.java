@@ -57,7 +57,7 @@ public class GetALLDays {
 		Date date = start_date_date;
 
 		while(date.before(end_date_date)){
-			if(!holi_set.contains(date)){
+			if(!holi_set.contains(SDF_TS.format(date))){
 				entireflow(SDF_TS.format(date),results_day_ids_points); // line = disaster_date = YYYYMMDD
 			}
 			date = DateGetter.nextday_date(date);
@@ -83,10 +83,10 @@ public class GetALLDays {
 			BufferedWriter bw_each = new BufferedWriter(new FileWriter(out_eachday));
 
 			//disaster_date = YYYYMMDD
-			SmallMethods.extractfromcommand(day); System.out.println("#done uncompressing ");
+			SmallMethods.extractfromcommand2(day); System.out.println("#done uncompressing ");
 
 			HashMap<Integer, Double> resforday = new HashMap<Integer, Double>();
-			File in = new File("/home/t-tyabe/Data/grid/0/tmp/ktsubouc/gps_"+day+".csv");
+			File in = new File("/home/t-tyabe/Data/grid/0/tmp/hadoop-ktsubouc/gps_"+day+".csv");
 
 			HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
 

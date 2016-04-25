@@ -12,9 +12,8 @@ public class SmallMethods {
 
 //	static File shapedir = new File("/home/t-tyabe/Data/Shutokenshp");
 //	static File shapedir = new File("/home/t-tyabe/NatureExp/small_Tokyo");
-	static File shapedir = new File("/home/t-tyabe/NatureExp/KanazawaSHP");
+//	static File shapedir = new File("/home/t-tyabe/NatureExp/KanazawaSHP");
 	
-	static GeometryChecker gchecker = new GeometryChecker(shapedir);
 	
 	public static Integer convertintomins(String time, Double bin){
 		Integer hour = Integer.valueOf(time.split(":")[0]);
@@ -46,7 +45,8 @@ public class SmallMethods {
 		return res;
 	}
 
-	public static String AreaOverlap(LonLat point){
+	public static String AreaOverlap(LonLat point, File shapedir){
+		GeometryChecker gchecker = new GeometryChecker(shapedir);
 		List<String> zonecodeList = gchecker.listOverlaps("JCODE",point.getLon(),point.getLat());
 		if(zonecodeList == null || zonecodeList.isEmpty()) {
 			return "no";

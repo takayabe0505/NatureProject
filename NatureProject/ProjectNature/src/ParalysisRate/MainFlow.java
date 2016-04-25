@@ -25,6 +25,7 @@ public class MainFlow {
 	public static String  respath  = "/home/t-tyabe/NatureExp/results0418/";
 	public static String  dislog = "/home/t-tyabe/NatureExp/DisasterAlertData_shutoken.csv";
 	public static File    holidays = new File(homepath+"holidays.csv");
+	public static File    shapedir = new File("");
 
 	public static void main(String args[]) throws IOException, ParseException{
 		File homepath_root = new File(homepath); homepath_root.mkdir();
@@ -105,7 +106,7 @@ public class MainFlow {
 
 				//				Date d_date = YMD.parse(d);
 				//				if(d_date.before(YMD.parse("20151101"))){
-				map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
+				map = GPSLogdataIntoMap.intomap7(in,shapedir, max_id_count, bin, min, 1);
 				//					if(map.keySet().size()<=15000){
 				//						System.out.println("couldn't get 500000 ids so trying again...");
 				//						map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);

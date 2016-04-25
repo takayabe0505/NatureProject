@@ -28,7 +28,7 @@ public class GPSLogdataIntoMap {
 		return num;
 	}
 
-	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, Integer max_id_count, Double bin, int min, int id_token) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
+	public static HashMap<String, TreeMap<Integer,LonLat>> intomap7(File in, File shapedir, Integer max_id_count, Double bin, int min, int id_token) throws IOException{ //until 2015-10-31 ... ID ID ... or null ID ... 7 tokens
 
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
@@ -46,7 +46,7 @@ public class GPSLogdataIntoMap {
 					if(tokens[4].length()>=18){
 						Double lon = Double.parseDouble(tokens[3]);
 						Double lat = Double.parseDouble(tokens[2]);
-						if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
+						if(SmallMethods.AreaOverlap(new LonLat(lon,lat),shapedir).equals("yes")){
 							//							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
 							//							bw.newLine();
 							if(tempmap.containsKey(id_br1)){
@@ -108,7 +108,7 @@ public class GPSLogdataIntoMap {
 		return map;
 	}
 
-	public static HashMap<String, TreeMap<Integer,LonLat>> intomap6(File in, Integer max_id_count, Double bin, int min) throws IOException{ //after 11/1
+	public static HashMap<String, TreeMap<Integer,LonLat>> intomap6(File in, File shapedir, Integer max_id_count, Double bin, int min) throws IOException{ //after 11/1
 
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
@@ -126,7 +126,7 @@ public class GPSLogdataIntoMap {
 					if(tokens[3].length()>=18){
 						Double lon = Double.parseDouble(tokens[2]);
 						Double lat = Double.parseDouble(tokens[1]);
-						if(SmallMethods.AreaOverlap(new LonLat(lon,lat)).equals("yes")){
+						if(SmallMethods.AreaOverlap(new LonLat(lon,lat), shapedir).equals("yes")){
 							//						bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
 							//						bw.newLine();
 							if(tempmap.containsKey(id_br1)){

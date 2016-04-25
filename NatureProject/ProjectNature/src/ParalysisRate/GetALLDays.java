@@ -20,15 +20,17 @@ public class GetALLDays {
 
 	// for calculating flow rate for all days. we use 2nd ID for all IDs. 
 
-	public static Integer max_id_count = 200000; //TODO change numbers 
+	public static Integer max_id_count = 500000; //TODO change numbers 
 	public static Integer min = 5;
 
 	public static Double  bin = 15d;
 	public static String  homepath = "/home/t-tyabe/NatureExp/";
-	public static String  respath  = "/home/t-tyabe/NatureExp/Kanazawa_results0415/";
+	public static String  respath  = "/home/t-tyabe/NatureExp/Tokyo_results0425/";
 	public static File    holidays = new File(homepath+"holidays.csv");
+//	public static File    shapedir = new File("/home/t-tyabe/NatureExp/KanazawaSHP");
+	public static File    shapedir = new File("/home/t-tyabe/NatureExp/small_Tokyo");
 
-	public static String  start_date = "20150818";
+	public static String  start_date = "20141021";
 	public static String  end_date   = "20160106";
 	protected static final SimpleDateFormat SDF_TS = new SimpleDateFormat("yyyyMMdd");//change time format
 
@@ -96,7 +98,7 @@ public class GetALLDays {
 
 //			Date d_date = SDF_TS.parse(day);
 //			if(d_date.before(SDF_TS.parse("20151101"))){
-				map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
+				map = GPSLogdataIntoMap.intomap7(in, shapedir, max_id_count, bin, min, 1);
 //				if(map.keySet().size()==0){
 //					System.out.println("couldn't get 500000 ids so trying again...");
 //					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);

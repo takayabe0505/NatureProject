@@ -32,6 +32,7 @@ public class GPSLogdataIntoMap {
 
 		int count = 0;
 		int countall = 0;
+		int count2 = 0;
 		// read GPS log file
 		HashSet<String> IDs_insidearea = new HashSet<String>();
 		HashMap<String,Integer> tempmap = new HashMap<String,Integer>();
@@ -41,6 +42,7 @@ public class GPSLogdataIntoMap {
 		//		BufferedWriter bw  = new BufferedWriter(new FileWriter(out_points));
 		String line1 = null;
 		while((line1=br1.readLine())!=null){
+			countall++;
 			String[] tokens = line1.split("\t"); 
 			if(tokens.length==7){
 				String id_br1 = tokens[id_token];
@@ -49,11 +51,11 @@ public class GPSLogdataIntoMap {
 						if(tokens[4].length()>=18){
 							Double lon = Double.parseDouble(tokens[3]);
 							Double lat = Double.parseDouble(tokens[2]);
-							countall++;
+							count2++;
 							if(SmallMethods.AreaOverlap(new LonLat(lon,lat),shapedir).equals("yes")){
 								count++;
 								if(count%10000==0){
-									System.out.println("#got: "+count+" points out of "+countall);
+									System.out.println("#got: "+count+" points out of "+count2+" , all: "+countall);
 								}
 								//							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
 								//							bw.newLine();

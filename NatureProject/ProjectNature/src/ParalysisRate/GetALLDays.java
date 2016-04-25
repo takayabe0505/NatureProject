@@ -52,6 +52,7 @@ public class GetALLDays {
 			holi_set.add(yyyymmdd);
 		}
 		br_h.close();
+		System.out.println(holi_set);
 
 		Date date = start_date_date;
 

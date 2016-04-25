@@ -45,32 +45,34 @@ public class GPSLogdataIntoMap {
 			if(tokens.length==7){
 				String id_br1 = tokens[id_token];
 				if(!id_br1.equals("null")){
-					if(tokens[4].length()>=18){
-						Double lon = Double.parseDouble(tokens[3]);
-						Double lat = Double.parseDouble(tokens[2]);
-						countall++;
-						if(SmallMethods.AreaOverlap(new LonLat(lon,lat),shapedir).equals("yes")){
-							count++;
-							if(count%10000==0){
-								System.out.println("#got: "+count+" points out of "+countall);
-							}
-							//							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
-							//							bw.newLine();
-							if(tempmap.containsKey(id_br1)){
-								Integer newval = tempmap.get(id_br1)+1;
-								tempmap.put(id_br1, newval);
-								if(tempmap.get(id_br1)==min){ //TODO change minumum points 
-									IDs_insidearea.add(id_br1);
-									//									System.out.println(id_br1); //TODO delete this 
+					if(!id_br1.equals(null)){
+						if(tokens[4].length()>=18){
+							Double lon = Double.parseDouble(tokens[3]);
+							Double lat = Double.parseDouble(tokens[2]);
+							countall++;
+							if(SmallMethods.AreaOverlap(new LonLat(lon,lat),shapedir).equals("yes")){
+								count++;
+								if(count%10000==0){
+									System.out.println("#got: "+count+" points out of "+countall);
+								}
+								//							bw.write(id_br1+","+String.valueOf(lon)+","+String.valueOf(lat));
+								//							bw.newLine();
+								if(tempmap.containsKey(id_br1)){
+									Integer newval = tempmap.get(id_br1)+1;
+									tempmap.put(id_br1, newval);
+									if(tempmap.get(id_br1)==min){ //TODO change minumum points 
+										IDs_insidearea.add(id_br1);
+										//									System.out.println(id_br1); //TODO delete this 
+									}
+								}
+								else{
+									tempmap.put(id_br1, 1);
 								}
 							}
-							else{
-								tempmap.put(id_br1, 1);
+							if(IDs_insidearea.size()==max_id_count){
+								System.out.println("successfully got "+max_id_count+" ids.");
+								break;
 							}
-						}
-						if(IDs_insidearea.size()==max_id_count){
-							System.out.println("successfully got "+max_id_count+" ids.");
-							break;
 						}
 					}
 				}

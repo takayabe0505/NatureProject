@@ -1,20 +1,23 @@
 package ParalysisRate;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
 
 import jp.ac.ut.csis.pflow.geom.LonLat;
 
 
 public class GetALLDays {
-	
+
 	// for calculating flow rate for all days. we use 2nd ID for all IDs. 
 
 	public static Integer max_id_count = 200000; //TODO change numbers 
@@ -25,7 +28,7 @@ public class GetALLDays {
 	public static String  respath  = "/home/t-tyabe/NatureExp/Kanazawa_results0415/";
 	public static File    holidays = new File(homepath+"holidays.csv");
 
-	public static String  start_date = "20141021";
+	public static String  start_date = "20150818";
 	public static String  end_date   = "20160106";
 	protected static final SimpleDateFormat SDF_TS = new SimpleDateFormat("yyyyMMdd");//change time format
 
@@ -38,10 +41,24 @@ public class GetALLDays {
 		Date start_date_date = SDF_TS.parse(start_date);
 		Date end_date_date   = SDF_TS.parse(end_date);
 
+		BufferedReader br_h = new BufferedReader(new FileReader(holidays));
+		HashSet<String> holi_set = new HashSet<String>();
+		String line_h = null;
+		while((line_h=br_h.readLine())!=null){
+			String[] hs = line_h.split("/");
+			Integer mon = Integer.valueOf(hs[1]);
+			Integer day = Integer.valueOf(hs[2]);
+			String yyyymmdd = hs[0]+String.format("%02d", mon)+String.format("%02d", day);
+			holi_set.add(yyyymmdd);
+		}
+		br_h.close();
+
 		Date date = start_date_date;
 
 		while(date.before(end_date_date)){
-			entireflow(SDF_TS.format(date),results_day_ids_points); // line = disaster_date = YYYYMMDD
+			if(!holi_set.contains(date)){
+				entireflow(SDF_TS.format(date),results_day_ids_points); // line = disaster_date = YYYYMMDD
+			}
 			date = DateGetter.nextday_date(date);
 		}
 
@@ -72,17 +89,17 @@ public class GetALLDays {
 
 			HashMap<String, TreeMap<Integer,LonLat>> map = new HashMap<String, TreeMap<Integer,LonLat>>();
 
-			Date d_date = SDF_TS.parse(day);
-			if(d_date.before(SDF_TS.parse("20151101"))){
+//			Date d_date = SDF_TS.parse(day);
+//			if(d_date.before(SDF_TS.parse("20151101"))){
 				map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
-				if(map.keySet().size()==0){
-					System.out.println("couldn't get 500000 ids so trying again...");
-					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
-				}
-			}
-			else{
-				map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
-			}
+//				if(map.keySet().size()==0){
+//					System.out.println("couldn't get 500000 ids so trying again...");
+//					map = GPSLogdataIntoMap.intomap7(in, max_id_count, bin, min, 1);
+//				}
+//			}
+//			else{
+//				map = GPSLogdataIntoMap.intomap6(in, max_id_count, bin, min);
+//			}
 
 			Integer totalpoints = 0;
 			for(String id : map.keySet()){

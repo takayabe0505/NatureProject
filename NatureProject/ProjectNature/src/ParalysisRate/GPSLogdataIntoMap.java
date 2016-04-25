@@ -45,7 +45,7 @@ public class GPSLogdataIntoMap {
 			if(tokens.length==7){
 				String id_br1 = tokens[id_token];
 				if(!id_br1.equals("null")){
-					if(!id_br1.equals(null)){
+					if(id_br1.length()>0){
 						if(tokens[4].length()>=18){
 							Double lon = Double.parseDouble(tokens[3]);
 							Double lat = Double.parseDouble(tokens[2]);
